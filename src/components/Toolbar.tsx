@@ -18,7 +18,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   onClearAll,
 }) => {
   return (
-    <div className="w-full max-w-2xl mx-auto flex flex-col sm:flex-row flex-wrap items-center justify-between gap-4 mb-6 p-4 bg-gray-50 rounded-lg border">
+    <div className="justify-center w-full max-w-2xl mx-auto flex flex-col sm:flex-row flex-wrap items-center justify-between gap-4 mb-6 p-4 bg-gray-50 rounded-lg border">
       <div className="w-full sm:w-auto flex justify-center sm:justify-start mb-2 sm:mb-0">
         <ColorPalette selectedColor={selectedColor} onColorSelect={onColorSelect} />
       </div>
