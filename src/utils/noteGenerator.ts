@@ -8,7 +8,7 @@ const SAMPLE_NOTES = [
   'Tests utilisateurs', 'Documentation', 'Recherche marché', 'Stratégie produit'
 ];
 
-export const generateRandomNote = (day: string, timeSlot: 'midi' | 'soir'): StickyNote => {
+export const generateRandomNote = (day: string | 'postit', timeSlot: 'midi' | 'soir'): StickyNote => {
   const randomColor = COLORS[Math.floor(Math.random() * COLORS.length)];
   const randomContent = SAMPLE_NOTES[Math.floor(Math.random() * SAMPLE_NOTES.length)];
   

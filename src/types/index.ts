@@ -2,12 +2,12 @@ export interface StickyNote {
   id: string;
   content: string;
   color: string;
-  day: string;
+  day: string | 'postit';
   timeSlot: 'midi' | 'soir';
 }
 
 export interface DroppableArea {
-  day: string;
+  day: string | 'postit';
   timeSlot: 'midi' | 'soir';
 }
 

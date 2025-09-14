@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Calendar } from 'lucide-react';
 import { StickyNote as StickyNoteType, COLORS, DAYS } from './types';
 import { DayColumn } from './components/DayColumn';
+import { PostItColumn } from './components/PostItColumn';
 import { Toolbar } from './components/Toolbar';
 import { generateRandomNotes } from './utils/noteGenerator';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 function App() {
-  const [notes, setNotes] = useState<StickyNoteType[]>([]);
+  const [notes, setNotes] = useLocalStorage<StickyNoteType[]>('weekly-planner-notes', []);
   const [selectedColor, setSelectedColor] = useState(COLORS[0].value);
   const [draggedNote, setDraggedNote] = useState<StickyNoteType | null>(null);
 
@@ -15,7 +17,7 @@ function App() {
       id: `note-${Date.now()}-${Math.random()}`,
       content: '',
       color: selectedColor,
-      day: DAYS[0],
+      day: 'postit',
       timeSlot: 'midi',
     };
     setNotes([...notes, newNote]);
@@ -55,6 +57,20 @@ function App() {
     }
   };
 
+  const handlePostItDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    
+    if (draggedNote) {
+      const updatedNote = {
+        ...draggedNote,
+        day: 'postit' as const,
+        timeSlot: 'midi' as const,
+      };
+      updateNote(updatedNote);
+      setDraggedNote(null);
+    }
+  };
+
   const randomFill = () => {
     const randomNotes = generateRandomNotes(notes);
     setNotes(randomNotes);
@@ -68,6 +84,9 @@ function App() {
     return notes.filter(note => note.day === day && note.timeSlot === timeSlot);
   };
 
+  const getPostItNotes = () => {
+    return notes.filter(note => note.day === 'postit');
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8">
@@ -94,20 +113,35 @@ function App() {
         />
 
         {/* Weekly Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-4">
-          {DAYS.map((day) => (
-            <DayColumn
-              key={day}
-              day={day}
-              midiNotes={getNotesForDayAndTime(day, 'midi')}
-              soirNotes={getNotesForDayAndTime(day, 'soir')}
+        <div className="grid grid-cols-1 lg:grid-cols-8 gap-4">
+          {/* Post-it Storage Column */}
+          <div className="lg:col-span-1">
+            <PostItColumn
+              notes={getPostItNotes()}
               onUpdateNote={updateNote}
               onDeleteNote={deleteNote}
               onDragStart={handleDragStart}
               onDragOver={handleDragOver}
-              onDrop={handleDrop}
+              onDrop={handlePostItDrop}
             />
-          ))}
+          </div>
+          
+          {/* Weekly Columns */}
+          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-4">
+            {DAYS.map((day) => (
+              <DayColumn
+                key={day}
+                day={day}
+                midiNotes={getNotesForDayAndTime(day, 'midi')}
+                soirNotes={getNotesForDayAndTime(day, 'soir')}
+                onUpdateNote={updateNote}
+                onDeleteNote={deleteNote}
+                onDragStart={handleDragStart}
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Instructions */}
@@ -117,10 +151,12 @@ function App() {
           </h3>
           <ul className="space-y-2 text-gray-600">
             <li>• <strong>Ajouter une note:</strong> Cliquez sur "Ajouter Note" puis glissez-la dans la section désirée</li>
+            <li>• <strong>Stocker une note:</strong> Glissez une note dans la colonne "Post-it" pour la ranger</li>
             <li>• <strong>Modifier une note:</strong> Double-cliquez sur une note pour l'éditer</li>
             <li>• <strong>Déplacer une note:</strong> Glissez et déposez entre les différentes sections</li>
             <li>• <strong>Changer la couleur:</strong> Sélectionnez une couleur avant de créer une nouvelle note</li>
-            <li>• <strong>Remplissage aléatoire:</strong> Génère automatiquement des notes d'exemple</li>
+            <li>• <strong>Remplissage aléatoire:</strong> Redistribue les notes existantes de façon aléatoire</li>
+            <li>• <strong>Sauvegarde automatique:</strong> Vos notes sont automatiquement sauvegardées localement</li>
           </ul>
         </div>
 

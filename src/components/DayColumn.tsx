@@ -10,7 +10,7 @@ interface DayColumnProps {
   onDeleteNote: (id: string) => void;
   onDragStart: (e: React.DragEvent, note: StickyNoteType) => void;
   onDragOver: (e: React.DragEvent) => void;
-  onDrop: (e: React.DragEvent, day: string, timeSlot: 'midi' | 'soir') => void;
+  onDrop: (e: React.DragEvent, day: string | 'postit', timeSlot: 'midi' | 'soir') => void;
 }
 
 export const DayColumn: React.FC<DayColumnProps> = ({
