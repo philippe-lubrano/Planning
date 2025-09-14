@@ -4,11 +4,12 @@ import { StickyNote as StickyNoteType, COLORS, DAYS } from './types';
 import { DayColumn } from './components/DayColumn';
 import { PostItColumn } from './components/PostItColumn';
 import { Toolbar } from './components/Toolbar';
-import { generateRandomNotes } from './utils/noteGenerator';
+import { generateRandomNotes, redistributeExistingNotes } from './utils/noteGenerator';
+import { generateDefaultFoodNotes } from './utils/defaultNotes';
 import { useLocalStorage } from './hooks/useLocalStorage';
 
 function App() {
-  const [notes, setNotes] = useLocalStorage<StickyNoteType[]>('weekly-planner-notes', []);
+  const [notes, setNotes] = useLocalStorage<StickyNoteType[]>('weekly-planner-notes', generateDefaultFoodNotes());
   const [selectedColor, setSelectedColor] = useState(COLORS[0].value);
   const [draggedNote, setDraggedNote] = useState<StickyNoteType | null>(null);
 
