@@ -56,7 +56,7 @@ function App() {
   };
 
   const randomFill = () => {
-    const randomNotes = generateRandomNotes();
+    const randomNotes = generateRandomNotes(notes);
     setNotes(randomNotes);
   };
 
