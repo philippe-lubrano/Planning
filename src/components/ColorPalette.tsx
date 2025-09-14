@@ -18,7 +18,7 @@ export const ColorPalette: React.FC<ColorPaletteProps> = ({
           key={color.value}
           onClick={() => onColorSelect(color.value)}
           className={`
-            w-8 h-8 rounded-full transition-all duration-200
+            w-6 h-6 rounded-full transition-all duration-200
             ${color.bg}
             ${selectedColor === color.value 
               ? 'ring-2 ring-offset-2 ring-gray-400 scale-110' 
