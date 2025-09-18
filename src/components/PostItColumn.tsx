@@ -30,7 +30,7 @@ export const PostItColumn: React.FC<PostItColumnProps> = ({
       </div>
 
       <div
-        className="p-4 min-h-[400px] bg-gray-50/50"
+        className="p-4 bg-gray-50/50"
         onDragOver={onDragOver}
         onDrop={onDrop}
       >

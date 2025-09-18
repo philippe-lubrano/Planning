@@ -4,7 +4,7 @@ import { StickyNote, COLORS } from '../types';
 const FOOD_CATEGORIES = {
   proteins: {
     color: COLORS.find(c => c.name === 'Blue')?.value || '#3B82F6',
-    items: ['Saumon', 'Dinde', 'Steak haché boeuf', 'Poulet', 'Colin']
+    items: ['Saumon', 'Dinde', 'Steak haché boeuf', 'Poulet', 'Colin', 'Lentilles, cacahuètes, œuf', 'Tofu, œuf, chia']
   },
   carbs: {
     color: COLORS.find(c => c.name === 'Yellow')?.value || '#F59E0B',
