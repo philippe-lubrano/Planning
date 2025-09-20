@@ -31,7 +31,7 @@ export const DayColumn: React.FC<DayColumnProps> = ({
 
       {/* Midi Section */}
       <div
-        className="p-4 border-b border-gray-200 min-h-[200px] bg-yellow-50/30"
+        className="p-4 border-b border-gray-200 min-h-[450px] bg-yellow-50/30"
         onDragOver={onDragOver}
         onDrop={(e) => onDrop(e, day, 'midi')}
       >
@@ -51,7 +51,7 @@ export const DayColumn: React.FC<DayColumnProps> = ({
 
       {/* Soir Section */}
       <div
-        className="p-4 min-h-[200px] bg-purple-50/30"
+        className="p-4 min-h-[450px] bg-purple-50/30"
         onDragOver={onDragOver}
         onDrop={(e) => onDrop(e, day, 'soir')}
       >
